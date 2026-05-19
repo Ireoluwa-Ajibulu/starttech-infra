@@ -1,0 +1,89 @@
+{
+  "alarms": [
+    {
+      "AlarmName": "starttech-cpu-high",
+      "AlarmDescription": "Triggers when EC2 CPU exceeds 80%",
+      "MetricName": "CPUUtilization",
+      "Namespace": "AWS/EC2",
+      "Statistic": "Average",
+      "Period": 120,
+      "EvaluationPeriods": 2,
+      "Threshold": 80,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "Dimensions": [
+        {
+          "Name": "AutoScalingGroupName",
+          "Value": "starttech-asg"
+        }
+      ]
+    },
+    {
+      "AlarmName": "starttech-cpu-low",
+      "AlarmDescription": "Triggers when EC2 CPU drops below 20%",
+      "MetricName": "CPUUtilization",
+      "Namespace": "AWS/EC2",
+      "Statistic": "Average",
+      "Period": 120,
+      "EvaluationPeriods": 2,
+      "Threshold": 20,
+      "ComparisonOperator": "LessThanOrEqualToThreshold",
+      "Dimensions": [
+        {
+          "Name": "AutoScalingGroupName",
+          "Value": "starttech-asg"
+        }
+      ]
+    },
+    {
+      "AlarmName": "starttech-alb-5xx-errors",
+      "AlarmDescription": "Triggers when ALB 5XX errors exceed 10",
+      "MetricName": "HTTPCode_Target_5XX_Count",
+      "Namespace": "AWS/ApplicationELB",
+      "Statistic": "Sum",
+      "Period": 60,
+      "EvaluationPeriods": 2,
+      "Threshold": 10,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "Dimensions": [
+        {
+          "Name": "LoadBalancer",
+          "Value": "starttech-alb"
+        }
+      ]
+    },
+    {
+      "AlarmName": "starttech-alb-response-time",
+      "AlarmDescription": "Triggers when ALB response time exceeds 2 seconds",
+      "MetricName": "TargetResponseTime",
+      "Namespace": "AWS/ApplicationELB",
+      "Statistic": "Average",
+      "Period": 60,
+      "EvaluationPeriods": 2,
+      "Threshold": 2,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "Dimensions": [
+        {
+          "Name": "LoadBalancer",
+          "Value": "starttech-alb"
+        }
+      ]
+    },
+    {
+      "AlarmName": "starttech-redis-cpu-high",
+      "AlarmDescription": "Triggers when Redis CPU exceeds 75%",
+      "MetricName": "EngineCPUUtilization",
+      "Namespace": "AWS/ElastiCache",
+      "Statistic": "Average",
+      "Period": 120,
+      "EvaluationPeriods": 2,
+      "Threshold": 75,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "Dimensions": [
+        {
+          "Name": "CacheClusterId",
+          "Value": "starttech-redis"
+        }
+      ]
+    }
+  ]
+}

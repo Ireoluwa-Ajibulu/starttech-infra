@@ -1,0 +1,40 @@
+fields @timestamp, @message
+| filter @message like /ERROR/
+| sort @timestamp desc
+| limit 50
+
+fields @timestamp, @message
+| filter @message like /status_code/
+| stats count(*) by status_code
+| sort count desc
+
+fields @timestamp, @message, response_time
+| filter response_time > 1000
+| sort response_time desc
+| limit 20
+
+fields @timestamp, @message
+| filter @message like /ERROR/
+| stats count(*) by error_type
+| sort count desc
+
+fields @timestamp, @message
+| filter @message like /authentication failed/
+| stats count(*) by bin(5m)
+| sort @timestamp desc
+
+fields @timestamp, @message, endpoint
+| filter ispresent(endpoint)
+| stats count(*) by endpoint
+| sort count desc
+
+fields @timestamp, @message
+| filter @message like /mongodb/
+| filter @message like /error/
+| sort @timestamp desc
+| limit 20
+
+fields @timestamp, @message
+| filter @message like /redis/
+| stats count(*) by cache_result
+| sort count desc
