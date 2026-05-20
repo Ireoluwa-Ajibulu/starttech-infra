@@ -15,9 +15,13 @@ resource "aws_launch_template" "app" {
   user_data = base64encode(<<-EOF
     #!/bin/bash
     apt-get update -y
-    apt-get install -y docker.io awslogs
+    apt-get install -y docker.io awslogs snapd
     systemctl start docker
     systemctl enable docker
+    snap install amazon-ssm-agent --classic
+    systemctl enable snap.amazon-ssm-agent.amazon-ssm-agent.service
+    systemctl start snap.amazon-ssm-agent.amazon-ssm-agent.service
+    mkdir -p /var/log/app
     cat > /etc/awslogs/awslogs.conf <<'CWLOG'
     [general]
     state_file = /var/awslogs/state/agent-state
@@ -149,6 +153,11 @@ resource "aws_iam_role_policy_attachment" "cloudwatch" {
 resource "aws_iam_role_policy_attachment" "ecr" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
+
+resource "aws_iam_role_policy_attachment" "ssm" {
+  role       = aws_iam_role.ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
