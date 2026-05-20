@@ -68,23 +68,39 @@ resource "aws_cloudwatch_dashboard" "main" {
   dashboard_body = jsonencode({
     widgets = [
       {
-        type = "metric"
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
         properties = {
+          region  = "eu-west-1"
+          title   = "EC2 CPU Utilization"
+          view    = "timeSeries"
+          stacked = false
           metrics = [
             ["AWS/EC2", "CPUUtilization", "AutoScalingGroupName", var.autoscaling_group_name]
           ]
           period = 300
-          title  = "EC2 CPU Utilization"
+          stat   = "Average"
         }
       },
       {
-        type = "metric"
+        type   = "metric"
+        x      = 12
+        y      = 0
+        width  = 12
+        height = 6
         properties = {
+          region  = "eu-west-1"
+          title   = "ALB Request Count"
+          view    = "timeSeries"
+          stacked = false
           metrics = [
             ["AWS/ApplicationELB", "RequestCount", "LoadBalancer", var.alb_arn]
           ]
           period = 300
-          title  = "ALB Request Count"
+          stat   = "Sum"
         }
       }
     ]

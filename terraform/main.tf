@@ -7,9 +7,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "starttech-terraform-state-468582173998"
+    bucket = "starttech-terraform-state-468582173998-west"
     key    = "starttech/terraform.tfstate"
-    region = "eu-north-1"
+    region = "eu-west-1"
   }
 }
 
@@ -49,6 +49,7 @@ module "storage" {
 
   project_name = var.project_name
   environment  = var.environment
+  account_id   = "468582173998"
 }
 
 module "monitoring" {

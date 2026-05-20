@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "AWS region"
   type        = string
-  default     = "eu-north-1"
+  default     = "eu-west-1"
 }
 
 variable "project_name" {
@@ -37,13 +37,13 @@ variable "private_subnet_cidrs" {
 variable "availability_zones" {
   description = "Availability zones"
   type        = list(string)
-  default     = ["eu-north-1a", "eu-north-1b"]
+  default     = ["eu-west-1a", "eu-west-1b"]
 }
 
 variable "ami_id" {
   description = "AMI ID for EC2 instances"
   type        = string
-  default     = "ami-089146c5626baa6bf"
+  default     = "ami-0d64bb532e0502c46"
 }
 
 variable "instance_type" {
